@@ -5,11 +5,10 @@ import {
   Box,
   IconButton,
   Button,
-  Badge,
-  Avatar,
+  Typography,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -37,12 +36,13 @@ const Navbar = () => {
             Focus
           </Button>
 
-          <IconButton onClick={() => navigate('/notifications')}>
+          {/* <IconButton onClick={() => navigate('/notifications')}>
             <Badge badgeContent={1} color="error">
               <NotificationsIcon sx={{ color: '#a06b4f' }} />
             </Badge>
-          </IconButton>
+          </IconButton> */}
 
+          {/* If the person is connected 
           <IconButton onClick={() => navigate('/profile')}>
             <Avatar
               sx={{
@@ -51,6 +51,23 @@ const Navbar = () => {
                 bgcolor: '#e2d6cc',
               }}
             />
+          </IconButton>
+          */}
+
+          <IconButton onClick={() => navigate('/profile')}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: '#a06b4f',
+                fontWeight: 'bold',
+                fontSize: '1.2rem',
+                fontFamily: `'Segoe UI', 'Roboto', 'Helvetica', sans-serif`,
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+              }}
+            >
+              Se connecter
+            </Typography>
           </IconButton>
         </Box>
       </Toolbar>

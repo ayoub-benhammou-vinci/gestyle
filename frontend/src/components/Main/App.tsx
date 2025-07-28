@@ -1,5 +1,7 @@
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import { Box } from '@mui/system';
+import HomePage from '../pages/Homepage';
 
 const App = () => {
   return (
@@ -8,10 +10,9 @@ const App = () => {
     >
       <Navbar />
 
-      {/* Contenu principal extensible */}
-      <div style={{ flex: 1 }}>
-        {/* Ton contenu ou <Outlet /> si tu utilises react-router */}
-      </div>
+      <Box style={{ flex: 1 }}>
+        <HomePage />
+      </Box>
 
       <Footer />
     </div>

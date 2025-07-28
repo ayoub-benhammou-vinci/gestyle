@@ -54,20 +54,8 @@ const Navbar = () => {
           </IconButton>
           */}
 
-          <IconButton onClick={() => navigate('/profile')}>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: '#a06b4f',
-                fontWeight: 'bold',
-                fontSize: '1.2rem',
-                fontFamily: `'Segoe UI', 'Roboto', 'Helvetica', sans-serif`,
-                WebkitFontSmoothing: 'antialiased',
-                MozOsxFontSmoothing: 'grayscale',
-              }}
-            >
-              Se connecter
-            </Typography>
+          <IconButton onClick={() => navigate('/login')}>
+            <Typography sx={navButtonStyle}>Se connecter</Typography>
           </IconButton>
         </Box>
       </Toolbar>

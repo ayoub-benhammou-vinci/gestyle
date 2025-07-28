@@ -2,7 +2,7 @@ import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 
-const MainContent = () => {
+const Homepage = () => {
   return (
     <Box
       component="main"
@@ -101,4 +101,4 @@ const MainContent = () => {
   );
 };
 
-export default MainContent;
+export default Homepage;

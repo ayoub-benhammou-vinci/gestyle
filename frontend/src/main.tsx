@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import App from './components/Main/App';
 import LoginPage from './components/pages/Loginpage';
 import Homepage from './components/pages/Homepage';
+import RegisterPage from './components/pages/Registerpage';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
       },
     ],
   },

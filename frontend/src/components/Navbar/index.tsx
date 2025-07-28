@@ -57,6 +57,10 @@ const Navbar = () => {
           <IconButton onClick={() => navigate('/login')}>
             <Typography sx={navButtonStyle}>Se connecter</Typography>
           </IconButton>
+
+          <IconButton onClick={() => navigate('/register')}>
+            <Typography sx={navButtonStyle}>S'inscrire</Typography>
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>

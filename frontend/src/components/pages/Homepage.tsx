@@ -1,9 +1,8 @@
-import React from 'react';
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 
-const MainContent: React.FC = () => {
+const MainContent = () => {
   return (
     <Box
       component="main"

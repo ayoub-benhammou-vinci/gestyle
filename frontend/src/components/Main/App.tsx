@@ -1,7 +1,7 @@
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import { Box } from '@mui/system';
-import HomePage from '../pages/Homepage';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
       <Navbar />
 
       <Box style={{ flex: 1 }}>
-        <HomePage />
+        <Outlet />
       </Box>
 
       <Footer />

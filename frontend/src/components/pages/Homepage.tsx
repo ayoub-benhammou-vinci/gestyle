@@ -1,8 +1,11 @@
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       component="main"
@@ -56,6 +59,7 @@ const Homepage = () => {
                   backgroundColor: '#915e45',
                 },
               }}
+              onClick={() => navigate('/todo')}
             >
               Cliquez ici
             </Button>
@@ -91,6 +95,7 @@ const Homepage = () => {
                   backgroundColor: '#915e45',
                 },
               }}
+              onClick={() => navigate('/focus')}
             >
               Cliquez ici
             </Button>

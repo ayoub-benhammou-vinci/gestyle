@@ -1,7 +1,0 @@
-@baseUrl = http://localhost:8080
-
-### Get the standard message
-GET {{baseUrl}}/login
-
-### Get the custom message
-GET {{baseUrl}}/register

@@ -7,6 +7,7 @@ import LoginPage from './components/pages/Loginpage';
 import Homepage from './components/pages/Homepage';
 import RegisterPage from './components/pages/Registerpage';
 import Todopage from './components/pages/Todopage';
+import Focuspage from './components/pages/Focuspage';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'todo',
         element: <Todopage />,
+      },
+      {
+        path: 'focus',
+        element: <Focuspage />,
       },
     ],
   },

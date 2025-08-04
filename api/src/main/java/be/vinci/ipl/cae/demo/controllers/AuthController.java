@@ -1,6 +1,6 @@
 package be.vinci.ipl.cae.demo.controllers;
 
-import be.vinci.ipl.cae.demo.models.dtos.AuthenticatedUser;
+import be.vinci.ipl.cae.demo.models.dtos.NewUser;
 import be.vinci.ipl.cae.demo.models.dtos.Credentials;
 import be.vinci.ipl.cae.demo.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -43,12 +43,12 @@ public class AuthController {
    * @return the authenticated user.
    */
   @PostMapping("/register")
-  public AuthenticatedUser register(@RequestBody Credentials credentials) {
+  public NewUser register(@RequestBody Credentials credentials) {
     if (isInvalidCredentials(credentials)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
-    AuthenticatedUser user = userService.register(credentials.getUsername(),
+    NewUser user = userService.register(credentials.getUsername(),
         credentials.getPassword());
 
     if (user == null) {
@@ -64,12 +64,12 @@ public class AuthController {
    * @return the authenticated user.
    */
   @PostMapping("/login")
-  public AuthenticatedUser login(@RequestBody Credentials credentials) {
+  public NewUser login(@RequestBody Credentials credentials) {
     if (isInvalidCredentials(credentials)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
-    AuthenticatedUser user = userService.login(credentials.getUsername(),
+    NewUser user = userService.login(credentials.getUsername(),
         credentials.getPassword());
 
     if (user == null) {

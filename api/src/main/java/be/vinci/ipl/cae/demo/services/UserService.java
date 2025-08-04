@@ -1,6 +1,6 @@
 package be.vinci.ipl.cae.demo.services;
 
-import be.vinci.ipl.cae.demo.models.dtos.AuthenticatedUser;
+import be.vinci.ipl.cae.demo.models.dtos.NewUser;
 import be.vinci.ipl.cae.demo.models.entities.User;
 import be.vinci.ipl.cae.demo.repositories.UserRepository;
 import com.auth0.jwt.JWT;
@@ -42,7 +42,7 @@ public class UserService {
    * @param username the username to included in the claim
    * @return the JWT token
    */
-  public AuthenticatedUser createJwtToken(String username) {
+  public NewUser createJwtToken(String username) {
     String token = JWT.create()
         .withIssuer("auth0")
         .withClaim("username", username)
@@ -50,11 +50,11 @@ public class UserService {
         .withExpiresAt(new Date(System.currentTimeMillis() + lifetimeJwt))
         .sign(algorithm);
 
-    AuthenticatedUser authenticatedUser = new AuthenticatedUser();
-    authenticatedUser.setUsername(username);
-    authenticatedUser.setToken(token);
+    NewUser newUser = new NewUser();
+    newUser.setUsername(username);
+    newUser.setToken(token);
 
-    return authenticatedUser;
+    return newUser;
   }
 
   /**
@@ -78,7 +78,7 @@ public class UserService {
    * @param password the password
    * @return the authenticated user if the login is successful, null otherwise
    */
-  public AuthenticatedUser login(String username, String password) {
+  public NewUser login(String username, String password) {
     User user = userRepository.findByUsername(username);
     if (user == null) {
       return null;
@@ -100,7 +100,7 @@ public class UserService {
    * @param password the password
    * @return the authenticated user if the registration is successful, null otherwise
    */
-  public AuthenticatedUser register(String username, String password) {
+  public NewUser register(String username, String password) {
     User user = userRepository.findByUsername(username);
     if (user != null) {
       return null;

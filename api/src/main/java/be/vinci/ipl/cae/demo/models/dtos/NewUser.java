@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Credentials DTO.
+ * NewUser DTO.
  */
 @Data
 @NoArgsConstructor
-public class Credentials {
+public class NewUser {
 
   private String username;
-  private String password;
+  private String token;
 }

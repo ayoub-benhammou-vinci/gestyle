@@ -1,6 +1,7 @@
 package be.vinci.ipl.cae.demo.services;
 
 import be.vinci.ipl.cae.demo.models.dtos.AuthenticatedUser;
+import be.vinci.ipl.cae.demo.models.dtos.NewUser;
 import be.vinci.ipl.cae.demo.models.entities.User;
 import be.vinci.ipl.cae.demo.repositories.UserRepository;
 import com.auth0.jwt.JWT;
@@ -105,7 +106,7 @@ public class UserService {
    * @param user the user to register
    * @return the authenticated user if the registration is successful, null otherwise
    */
-  public void register(User user) {
+  public void register(NewUser user) {
     if (userRepository.findByEmail(user.getEmail()) != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
     }
@@ -126,12 +127,12 @@ public class UserService {
   /**
    * Create a new user.
    *
-   * @param user the user to create
+   * @param newUser the user to create
    */
-  public void createOne(User user) {
-    String hashedPassword = passwordEncoder.encode(user.getPassword());
+  public void createOne(NewUser newUser) {
+    String hashedPassword = passwordEncoder.encode(newUser.getPassword());
 
-    User newUser = new User();
+    User user = new User();
     newUser.setEmail(user.getEmail());
     newUser.setPassword(hashedPassword);
     newUser.setPseudo(user.getPseudo());

@@ -1,5 +1,6 @@
 package be.vinci.ipl.cae.demo.controllers;
 
+import be.vinci.ipl.cae.demo.models.dtos.NewUser;
 import be.vinci.ipl.cae.demo.models.entities.User;
 import be.vinci.ipl.cae.demo.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class AuthController {
     this.userService = userService;
   }
 
-  private boolean isInvalidRegisterCredentials(User credentials) {
+  private boolean isInvalidRegisterCredentials(NewUser credentials) {
     if (credentials == null || credentials.getEmail() == null || credentials.getEmail().isBlank()
         || credentials.getPassword() == null || credentials.getPassword().isBlank()
         || credentials.getPseudo() == null || credentials.getPseudo().isBlank()
@@ -31,7 +32,7 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public void register(@RequestBody User credentials) {
+  public void register(@RequestBody NewUser credentials) {
     if (isInvalidRegisterCredentials(credentials)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid registration credentials");
     }

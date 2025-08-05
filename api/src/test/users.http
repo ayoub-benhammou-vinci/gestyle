@@ -1,2 +1,10 @@
 @baseUrl = http://localhost:3000
 
+### Try to login an unknow user
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+  "email":"ayoub@gmail.com",
+
+}

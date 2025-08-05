@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserTaskId {
-  private Long user;
-  private Long batch;
+  private Long userId;
+  private Long taskId;
 }

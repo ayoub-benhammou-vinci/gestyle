@@ -1,12 +1,15 @@
 package be.vinci.ipl.cae.demo.services;
 
+import be.vinci.ipl.cae.demo.models.dtos.AuthenticatedUser;
 import be.vinci.ipl.cae.demo.models.entities.User;
 import be.vinci.ipl.cae.demo.repositories.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import java.util.Date;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * User service.
@@ -38,33 +41,33 @@ public class UserService {
   /**
    * Create a JWT token.
    *
-   * @param username the username to included in the claim
+   * @param email to included in the claim
    * @return the JWT token
    */
-  public NewUser createJwtToken(String username) {
+  public AuthenticatedUser createJwtToken(String email) {
     String token = JWT.create()
         .withIssuer("auth0")
-        .withClaim("username", username)
+        .withClaim("email", email)
         .withIssuedAt(new Date())
         .withExpiresAt(new Date(System.currentTimeMillis() + lifetimeJwt))
         .sign(algorithm);
 
-    NewUser newUser = new NewUser();
-    newUser.setUsername(username);
-    newUser.setToken(token);
+    AuthenticatedUser authenticatedUser = new AuthenticatedUser();
+    authenticatedUser.setEmail(email);
+    authenticatedUser.setToken(token);
 
-    return newUser;
+    return authenticatedUser;
   }
 
   /**
    * Verify a JWT token.
    *
    * @param token the token to verify
-   * @return the username if the token is valid, null otherwise
+   * @return the email if the token is valid, null otherwise
    */
   public String verifyJwtToken(String token) {
     try {
-      return JWT.require(algorithm).build().verify(token).getClaim("username").asString();
+      return JWT.require(algorithm).build().verify(token).getClaim("email").asString();
     } catch (Exception e) {
       return null;
     }
@@ -73,65 +76,66 @@ public class UserService {
   /**
    * Login a user.
    *
-   * @param username the username
+   * @param email the email
    * @param password the password
    * @return the authenticated user if the login is successful, null otherwise
    */
-  public NewUser login(String username, String password) {
-    User user = userRepository.findByUsername(username);
+  public AuthenticatedUser login(String email, String password) {
+    //If the person want to connect with his email
+    User user = userRepository.findByEmail(email);
+
+    // If the user does not exist, we throw an exception
+    // This will return a 404 Not Found error
     if (user == null) {
-      return null;
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The person does not exist.");
     }
 
+    // Check if the password matches
+    // If the password is not correct, we throw an exception
     if (!passwordEncoder.matches(password, user.getPassword())) {
-      return null;
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect.");
     }
 
-    System.out.println(createJwtToken(username));
-
-    return createJwtToken(username);
+    return createJwtToken(email);
   }
 
   /**
    * Register a new user.
    *
-   * @param username the username
-   * @param password the password
+   * @param user the user to register
    * @return the authenticated user if the registration is successful, null otherwise
    */
-  public NewUser register(String username, String password) {
-    User user = userRepository.findByUsername(username);
-    if (user != null) {
-      return null;
+  public void register(User user) {
+    if (userRepository.findByEmail(user.getEmail()) != null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
     }
 
-    createOne(username, password);
-
-    return createJwtToken(username);
+    createOne(user);
   }
 
   /**
-   * Read a user from its username.
+   * Read a user from its email.
    *
-   * @param username the username
+   * @param email the email of the user
    * @return the user if it exists, null otherwise
    */
-  public User readOneFromUsername(String username) {
-    return userRepository.findByUsername(username);
+  public User readOneFromEmail(String email) {
+    return userRepository.findByEmail(email);
   }
 
   /**
    * Create a new user.
    *
-   * @param username the username
-   * @param password the password
+   * @param user the user to create
    */
-  public void createOne(String username, String password) {
-    String hashedPassword = passwordEncoder.encode(password);
+  public void createOne(User user) {
+    String hashedPassword = passwordEncoder.encode(user.getPassword());
 
-    User user = new User();
-    user.setUsername(username);
-    user.setPassword(hashedPassword);
+    User newUser = new User();
+    newUser.setEmail(user.getEmail());
+    newUser.setPassword(hashedPassword);
+    newUser.setPseudo(user.getPseudo());
+    newUser.setSexe(user.getSexe());
 
     userRepository.save(user);
   }

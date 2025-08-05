@@ -1,6 +1,7 @@
 package be.vinci.ipl.cae.demo.models.entities;
 
 import be.vinci.ipl.cae.demo.models.id.UserTaskId;
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -19,13 +20,16 @@ public class UserTask {
   @EmbeddedId
   private UserTaskId userTaskId;
 
-  @MapsId("user")
-  @JoinColumn(name = "user", nullable = false)
+  @MapsId("userId")
+  @JoinColumn(name = "user_id", nullable = false)
   @ManyToOne
   private User user;
 
-  @MapsId("task")
-  @JoinColumn(name = "task", nullable = false)
+  @MapsId("taskId")
+  @JoinColumn(name = "task_id", nullable = false)
   @ManyToOne
   private Task task;
+
+  @Column(nullable = false)
+  private boolean done;
 }

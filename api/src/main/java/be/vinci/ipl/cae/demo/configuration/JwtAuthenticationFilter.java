@@ -48,12 +48,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
     String token = request.getHeader("Authorization");
     if (token != null) {
-      String username = userService.verifyJwtToken(token);
-      if (username != null) {
-        User user = userService.readOneFromUsername(username);
+      String email = userService.verifyJwtToken(token);
+      if (email != null) {
+        User user = userService.readOneFromEmail(email);
         if (user != null) {
           List<GrantedAuthority> authorities = new ArrayList<>();
-          if ("admin".equals(username)) {
+          if ("admin@gmail.com".equals(email)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
           }
           UsernamePasswordAuthenticationToken authentication =

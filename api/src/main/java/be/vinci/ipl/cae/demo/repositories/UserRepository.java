@@ -13,8 +13,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
   /**
    * Find a user by its username.
    *
-   * @param username the username
+   * @param email the username
    * @return the user
    */
-  User findByUsername(String username);
+  User findByEmail(String email);
 }

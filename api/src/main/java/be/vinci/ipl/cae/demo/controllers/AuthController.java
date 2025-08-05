@@ -23,7 +23,7 @@ public class AuthController {
     return credentials != null && credentials.getEmail() != null && !credentials.getEmail().isBlank()
         && credentials.getPassword() != null && !credentials.getPassword().isBlank()
         && credentials.getPseudo() != null && !credentials.getPseudo().isBlank()
-        && credentials.getSexe() != null && !credentials.getSexe().isBlank();
+        && credentials.getCivility() != null && !credentials.getCivility().toString().isBlank();
   }
 
   @PostMapping("/register")

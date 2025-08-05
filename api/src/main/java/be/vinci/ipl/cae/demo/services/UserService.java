@@ -136,7 +136,7 @@ public class UserService {
     user.setEmail(newUser.getEmail());
     user.setPassword(hashedPassword);
     user.setPseudo(newUser.getPseudo());
-    user.setSexe(newUser.getSexe());
+    user.setCivility(newUser.getCivility());
 
     userRepository.save(user);
   }

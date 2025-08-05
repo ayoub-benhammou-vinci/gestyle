@@ -5,7 +5,7 @@ POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "sexe": "man",
+  "civility": "MISTER",
   "pseudo": "user1",
   "email": "user1@gmail.com",
   "password": "password123"
@@ -16,7 +16,7 @@ POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "sexe": "woman",
+  "civility": "MADAM",
   "pseudo": "user2",
   "email": "user1@gmail.com",
   "password": "password456"
@@ -27,7 +27,7 @@ POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "sexe": "man",
+  "civility": "MISTER",
   "email": "user5@gmail.com",
   "password": "password123"
 }
@@ -37,7 +37,7 @@ POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "sexe": "woman",
+  "civility": "OTHER",
   "pseudo": "user6",
   "password": "password123"
 }
@@ -47,7 +47,7 @@ POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "sexe": "autre",
+  "civility": "Hello",
   "pseudo": "user7",
   "email": "user7@gmail.com",
   "password": "password123"

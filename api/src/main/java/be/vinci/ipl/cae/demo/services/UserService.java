@@ -108,7 +108,7 @@ public class UserService {
    */
   public void register(NewUser user) {
     if (userRepository.findByEmail(user.getEmail()) != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists.");
     }
 
     createOne(user);
@@ -133,10 +133,10 @@ public class UserService {
     String hashedPassword = passwordEncoder.encode(newUser.getPassword());
 
     User user = new User();
-    newUser.setEmail(user.getEmail());
-    newUser.setPassword(hashedPassword);
-    newUser.setPseudo(user.getPseudo());
-    newUser.setSexe(user.getSexe());
+    user.setEmail(newUser.getEmail());
+    user.setPassword(hashedPassword);
+    user.setPseudo(newUser.getPseudo());
+    user.setSexe(newUser.getSexe());
 
     userRepository.save(user);
   }

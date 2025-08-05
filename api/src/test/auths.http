@@ -1,47 +1,54 @@
 @baseUrl = http://localhost:3000
 
-### Try to login an unknow user
-POST {{baseUrl}}/auths/login
-Content-Type: application/json
-
-{
-  "username":"unknown",
-  "password":"admin"
-}
-
-### Create the default admin
+### 1.1 Successful registration
 POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "username":"admin",
-  "password":"admin"
+  "sexe": "man",
+  "pseudo": "user1",
+  "email": "user1@gmail.com",
+  "password": "password123"
 }
 
-### Login the default admin
-POST {{baseUrl}}/auths/login
-Content-Type: application/json
-
-{
-  "username":"admin",
-  "password":"admin"
-}
-
-
-### Create the manager user
+### 1.2 Email already used (should return 409 Conflict)
 POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "username":"manager",
-  "password":"manager"
+  "sexe": "woman",
+  "pseudo": "user2",
+  "email": "user1@gmail.com",
+  "password": "password456"
 }
 
-### Login the manager user
-POST {{baseUrl}}/auths/login
+### 1.3 Missing pseudo field (should return 400 Bad Request)
+POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "username":"manager",
-  "password":"manager"
+  "sexe": "man",
+  "email": "user5@gmail.com",
+  "password": "password123"
+}
+
+### 1.4 Missing email field (should return 400 Bad Request)
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+  "sexe": "woman",
+  "pseudo": "user6",
+  "password": "password123"
+}
+
+### 1.5 Invalid sexe value (should return 400 Bad Request)
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+  "sexe": "autre",
+  "pseudo": "user7",
+  "email": "user7@gmail.com",
+  "password": "password123"
 }

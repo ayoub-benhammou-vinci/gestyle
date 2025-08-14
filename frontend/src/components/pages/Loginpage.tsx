@@ -6,9 +6,61 @@ import {
   TextField,
   Typography,
   Link,
+  Alert,
 } from '@mui/material';
+import type { AuthenticatedUser, Credentials } from '../types';
+import { useState, type SyntheticEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const loginUser = async (
+  credentials: Credentials,
+): Promise<void | Response> => {
+  try {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const response = await fetch('/api/auths/login', options);
+
+    if (!response.ok) {
+      throw new Error(
+        `fetch error : ${response.status} : ${response.statusText}`,
+      );
+    }
+
+    const authenticatedUser: AuthenticatedUser = await response.json();
+    console.log('authenticatedUser: ', authenticatedUser);
+  } catch (err) {
+    console.error('loginUser::error: ', err);
+    throw err;
+  }
+};
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const response = await loginUser({ email, password });
+      console.log(JSON.stringify(response));
+      if (response && response.status === 401) {
+        setError('Erreur de connexion. Email ou mot de passe invalide.');
+      } else {
+        navigate('/'); // Redirection vers la page Todo après connexion réussie
+      }
+    } catch (err) {
+      console.error('LoginPage::error: ', err);
+    }
+  };
+
   return (
     <Box sx={{ flex: 1, py: 6, textAlign: 'center' }}>
       {/* Titre */}
@@ -49,7 +101,12 @@ const LoginPage = () => {
 
           {/* Formulaire */}
           <Grid item xs={12} md={6}>
-            <Box component="form" sx={{ textAlign: 'left' }}>
+            {error && <Alert severity="error">{error}</Alert>}
+            <Box
+              component="form"
+              sx={{ textAlign: 'left' }}
+              onSubmit={handleSubmit}
+            >
               <Typography sx={{ color: '#9c684e', mb: 1 }}>
                 Adresse e-mail ou pseudo
               </Typography>
@@ -57,6 +114,8 @@ const LoginPage = () => {
                 fullWidth
                 variant="outlined"
                 sx={{ mb: 2, backgroundColor: '#fff' }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <Typography sx={{ color: '#9c684e', mb: 1 }}>
@@ -67,8 +126,9 @@ const LoginPage = () => {
                 type="password"
                 variant="outlined"
                 sx={{ mb: 3, backgroundColor: '#fff' }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-
               <Button
                 fullWidth
                 variant="contained"
@@ -83,6 +143,7 @@ const LoginPage = () => {
                     backgroundColor: '#915e45',
                   },
                 }}
+                type="submit"
               >
                 Se connecter
               </Button>

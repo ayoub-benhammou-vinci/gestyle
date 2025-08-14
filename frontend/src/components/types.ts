@@ -11,4 +11,14 @@ interface Task {
   content: string;
 }
 
-export type { Task, User };
+interface Credentials {
+  email: string;
+  password: string;
+}
+
+interface AuthenticatedUser {
+  email: string;
+  token: string;
+}
+
+export type { Task, User, Credentials, AuthenticatedUser };

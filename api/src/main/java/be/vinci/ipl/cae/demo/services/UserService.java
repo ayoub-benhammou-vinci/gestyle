@@ -88,6 +88,7 @@ public class UserService {
     // If the user does not exist, we throw an exception
     // This will return a 404 Not Found error
     if (user == null) {
+      System.out.println("Invalid login credentials: ");
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The person does not exist.");
     }
 

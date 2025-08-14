@@ -52,3 +52,22 @@ Content-Type: application/json
   "email": "user7@gmail.com",
   "password": "password123"
 }
+
+### 1.6 Login successful
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+  "email": "user1@gmail.com",
+  "password": "password123"
+}
+
+### 1.7 Login with wrong password (should return 401 Unauthorized)
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+  "email": "user1@gmail.com",
+  "password": "password134"
+}
+

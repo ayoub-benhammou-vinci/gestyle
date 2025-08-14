@@ -21,14 +21,14 @@ public class AuthController {
     this.userService = userService;
   }
 
-  private boolean isInvalidRegisterCredentials(NewUser credentials) {
+  private boolean isValidRegisterCredentials(NewUser credentials) {
     return credentials != null && credentials.getEmail() != null && !credentials.getEmail().isBlank()
         && credentials.getPassword() != null && !credentials.getPassword().isBlank()
         && credentials.getPseudo() != null && !credentials.getPseudo().isBlank()
         && credentials.getCivility() != null && !credentials.getCivility().toString().isBlank();
   }
 
-  private boolean isInvalidLoginCredentials(Credentials credentials) {
+  private boolean isValidLoginCredentials(Credentials credentials) {
     return credentials != null &&
         credentials.getEmail() != null && !credentials.getEmail().isBlank()
         && credentials.getPassword() != null && !credentials.getPassword().isBlank();
@@ -36,7 +36,7 @@ public class AuthController {
 
   @PostMapping("/register")
   public void register(@RequestBody NewUser credentials) {
-    if (!isInvalidRegisterCredentials(credentials)) {
+    if (!isValidRegisterCredentials(credentials)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid registration credentials");
     }
     userService.register(credentials);
@@ -44,7 +44,7 @@ public class AuthController {
 
   @PostMapping("/login")
   public AuthenticatedUser login(@RequestBody Credentials credentials) {
-    if (isInvalidLoginCredentials(credentials)) {
+    if (!isValidLoginCredentials(credentials)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid login credentials");
     }
     return userService.login(credentials.getEmail(), credentials.getPassword());

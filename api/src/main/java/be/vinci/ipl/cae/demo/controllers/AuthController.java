@@ -1,5 +1,7 @@
 package be.vinci.ipl.cae.demo.controllers;
 
+import be.vinci.ipl.cae.demo.models.dtos.AuthenticatedUser;
+import be.vinci.ipl.cae.demo.models.dtos.Credentials;
 import be.vinci.ipl.cae.demo.models.dtos.NewUser;
 import be.vinci.ipl.cae.demo.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,12 @@ public class AuthController {
         && credentials.getCivility() != null && !credentials.getCivility().toString().isBlank();
   }
 
+  private boolean isInvalidLoginCredentials(Credentials credentials) {
+    return credentials != null &&
+        credentials.getEmail() != null && !credentials.getEmail().isBlank()
+        && credentials.getPassword() != null && !credentials.getPassword().isBlank();
+  }
+
   @PostMapping("/register")
   public void register(@RequestBody NewUser credentials) {
     if (!isInvalidRegisterCredentials(credentials)) {
@@ -33,4 +41,13 @@ public class AuthController {
     }
     userService.register(credentials);
   }
+
+  @PostMapping("/login")
+  public AuthenticatedUser login(@RequestBody Credentials credentials) {
+    if (isInvalidLoginCredentials(credentials)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid login credentials");
+    }
+    return userService.login(credentials.getEmail(), credentials.getPassword());
+  }
+
 }

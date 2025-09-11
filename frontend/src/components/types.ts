@@ -21,4 +21,11 @@ interface AuthenticatedUser {
   token: string;
 }
 
-export type { Task, User, Credentials, AuthenticatedUser };
+interface NewUser {
+  civility: string;
+  pseudo: string;
+  email: string;
+  password: string;
+}
+
+export type { Task, User, Credentials, AuthenticatedUser, NewUser };

@@ -8,12 +8,17 @@ interface RowRadioButtonsGroupProps {
   option1: string;
   option2: string;
   option3: string;
+  value: string;
+  onChange: (value: string) => void;
+  required?: boolean;
 }
 
 export default function RowRadioButtonsGroup({
   option1,
   option2,
   option3,
+  value,
+  onChange,
 }: RowRadioButtonsGroupProps) {
   return (
     <FormControl>
@@ -22,6 +27,8 @@ export default function RowRadioButtonsGroup({
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       >
         <FormControlLabel value={option1} control={<Radio />} label={option1} />
         <FormControlLabel value={option2} control={<Radio />} label={option2} />

@@ -6,6 +6,7 @@ import type {
   NewUser,
   Credentials,
 } from '../components/types';
+import { storeAuthenticatedUser } from '../utils/session';
 
 const defaultUserContext = {
   authenticatedUser: undefined,
@@ -65,6 +66,7 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
       const authenticatedUser: AuthenticatedUser = await response.json();
       setAuthenticatedUser(authenticatedUser);
+      storeAuthenticatedUser(authenticatedUser);
       console.log('authenticatedUser: ', authenticatedUser);
     } catch (err) {
       console.error('loginUser::error: ', err);

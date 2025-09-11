@@ -1,30 +1,9 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import RowRadioButtonsGroup from '../../utils/RadioButton';
-import type { NewUser } from '../types';
-import { useEffect, useState, type SyntheticEvent } from 'react';
+import { useContext, useEffect, useState, type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const registerUser = async (newUser: NewUser): Promise<boolean> => {
-  try {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(newUser),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const response = await fetch('/api/auths/register', options);
-
-    if (!response.ok) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error('Error registering user:', error);
-    return false;
-  }
-};
+import { UserContext } from '../../contexts/UserContext';
+import type { UserContextType } from '../types';
 
 const RegisterPage = () => {
   const [sexe, setSexe] = useState('');
@@ -40,14 +19,20 @@ const RegisterPage = () => {
     ['Autre', 'OTHER'],
   ]);
 
+  const { authenticatedUser, registerUser } =
+    useContext<UserContextType>(UserContext);
+
   useEffect(() => {
+    if (authenticatedUser) {
+      navigate('/'); // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
+    }
     setSexe('');
     setPseudo('');
     setEmail('');
     setPassword('');
     setConfirmPassword('');
     setError('');
-  }, []);
+  }, [navigate, authenticatedUser]);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();

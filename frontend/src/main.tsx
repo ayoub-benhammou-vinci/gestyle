@@ -8,6 +8,7 @@ import Homepage from './components/pages/Homepage';
 import RegisterPage from './components/pages/Registerpage';
 import Todopage from './components/pages/Todopage';
 import Focuspage from './components/pages/Focuspage';
+import { UserContextProvider } from './contexts/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <CssBaseline />
-    <RouterProvider router={router} />
+    <UserContextProvider>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </UserContextProvider>
   </React.StrictMode>,
 );

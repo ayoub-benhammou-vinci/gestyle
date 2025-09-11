@@ -122,6 +122,7 @@ const RegisterPage = () => {
             <Box textAlign="left">
               <Box sx={{ color: '#9c684e', mb: 3.8 }}>
                 <RowRadioButtonsGroup
+                  name="Genre"
                   option1="Féminin"
                   option2="Masculin"
                   option3="Autre"

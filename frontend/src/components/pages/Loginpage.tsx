@@ -8,43 +8,27 @@ import {
   Link,
   Alert,
 } from '@mui/material';
-import type { AuthenticatedUser, Credentials } from '../types';
-import { useState, type SyntheticEvent } from 'react';
+import type { UserContextType } from '../types';
+import { useContext, useEffect, useState, type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const loginUser = async (
-  credentials: Credentials,
-): Promise<void | Response> => {
-  try {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const response = await fetch('/api/auths/login', options);
-
-    if (!response.ok) {
-      throw new Error(
-        `fetch error : ${response.status} : ${response.statusText}`,
-      );
-    }
-
-    const authenticatedUser: AuthenticatedUser = await response.json();
-    console.log('authenticatedUser: ', authenticatedUser);
-  } catch (err) {
-    console.error('loginUser::error: ', err);
-    throw err;
-  }
-};
+import { UserContext } from '../../contexts/UserContext';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { loginUser, authenticatedUser } =
+    useContext<UserContextType>(UserContext);
+
+  useEffect(() => {
+    if (authenticatedUser) {
+      navigate('/'); // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
+    }
+    setEmail('');
+    setPassword('');
+    setError('');
+  }, [navigate, authenticatedUser]);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();

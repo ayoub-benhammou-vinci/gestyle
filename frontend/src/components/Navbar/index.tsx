@@ -6,13 +6,40 @@ import {
   IconButton,
   Button,
   Typography,
+  Avatar,
+  Menu,
+  MenuItem,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
+import type { UserContextType } from '../types';
+import { useContext, useState } from 'react';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { authenticatedUser, logout } =
+    useContext<UserContextType>(UserContext);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutAndRedirect = () => {
+    logout();
+    navigate('/login');
+    handleMenuClose();
+  };
+
+  const goToProfile = () => {
+    navigate('/profile');
+    handleMenuClose();
+  };
 
   return (
     <AppBar
@@ -27,7 +54,7 @@ const Navbar = () => {
           </IconButton>
         </Box>
 
-        {/* Right side - Nav buttons + notifications + profile */}
+        {/* Right side - Nav buttons + profile */}
         <Box display="flex" alignItems="center" gap={4}>
           <Button onClick={() => navigate('/todo')} sx={navButtonStyle}>
             To-do
@@ -36,31 +63,39 @@ const Navbar = () => {
             Focus
           </Button>
 
-          {/* <IconButton onClick={() => navigate('/notifications')}>
-            <Badge badgeContent={1} color="error">
-              <NotificationsIcon sx={{ color: '#a06b4f' }} />
-            </Badge>
-          </IconButton> */}
+          {authenticatedUser && (
+            <>
+              <IconButton onClick={handleMenuOpen}>
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    bgcolor: '#e2d6cc',
+                  }}
+                />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={goToProfile}>Voir profil</MenuItem>
+                <MenuItem onClick={logoutAndRedirect}>Se déconnecter</MenuItem>
+              </Menu>
+            </>
+          )}
 
-          {/* If the person is connected 
-          <IconButton onClick={() => navigate('/profile')}>
-            <Avatar
-              sx={{
-                width: 32,
-                height: 32,
-                bgcolor: '#e2d6cc',
-              }}
-            />
-          </IconButton>
-          */}
+          {!authenticatedUser && (
+            <>
+              <IconButton onClick={() => navigate('/login')}>
+                <Typography sx={navButtonStyle}>Se connecter</Typography>
+              </IconButton>
 
-          <IconButton onClick={() => navigate('/login')}>
-            <Typography sx={navButtonStyle}>Se connecter</Typography>
-          </IconButton>
-
-          <IconButton onClick={() => navigate('/register')}>
-            <Typography sx={navButtonStyle}>S'inscrire</Typography>
-          </IconButton>
+              <IconButton onClick={() => navigate('/register')}>
+                <Typography sx={navButtonStyle}>S'inscrire</Typography>
+              </IconButton>
+            </>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

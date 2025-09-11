@@ -27,7 +27,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (authenticatedUser) {
-      navigate('/'); // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
+      navigate('/');
     }
     setEmail('');
     setPassword('');
@@ -36,17 +36,13 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('rememberMe: ', { rememberMe });
     try {
       const response = await loginUser({ email, password }, rememberMe);
       console.log(JSON.stringify(response));
-      if (response && response.status === 401) {
-        setError('Erreur de connexion. Email ou mot de passe invalide.');
-      } else {
-        navigate('/'); // Redirection vers la page Todo après connexion réussie
-      }
+      navigate('/');
     } catch (err) {
       console.error('LoginPage::error: ', err);
+      setError('Email ou mot de passe invalide.');
     }
   };
 
@@ -56,9 +52,22 @@ const LoginPage = () => {
       <Typography
         variant="h4"
         fontWeight="bold"
-        sx={{ color: '#9c684e', mb: 4 }}
+        sx={{ color: '#9c684e', mb: 2 }}
       >
         Se connecter
+      </Typography>
+
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        sx={{
+          color: '#9c684e',
+          mb: 4,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        {error && <Alert severity="error">{error}</Alert>}
       </Typography>
 
       {/* Conteneur principal */}
@@ -90,14 +99,13 @@ const LoginPage = () => {
 
           {/* Formulaire */}
           <Grid item xs={12} md={6}>
-            {error && <Alert severity="error">{error}</Alert>}
             <Box
               component="form"
               sx={{ textAlign: 'left' }}
               onSubmit={handleSubmit}
             >
               <Typography sx={{ color: '#9c684e', mb: 1 }}>
-                Adresse e-mail ou pseudo
+                Adresse e-mail
               </Typography>
               <TextField
                 fullWidth
@@ -105,6 +113,8 @@ const LoginPage = () => {
                 sx={{ mb: 2, backgroundColor: '#fff' }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                type="email"
               />
 
               <Typography sx={{ color: '#9c684e', mb: 1 }}>

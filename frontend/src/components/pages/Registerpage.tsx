@@ -1,4 +1,12 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 import RowRadioButtonsGroup from '../../utils/RadioButton';
 import { useContext, useEffect, useState, type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -88,9 +96,14 @@ const RegisterPage = () => {
       <Typography
         variant="h4"
         fontWeight="bold"
-        sx={{ color: '#9c684e', mb: 4 }}
+        sx={{
+          color: '#9c684e',
+          mb: 4,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       >
-        {error && <span style={{ color: 'red' }}>{error}</span>}
+        {error && <Alert severity="error">{error}</Alert>}
       </Typography>
 
       <Paper

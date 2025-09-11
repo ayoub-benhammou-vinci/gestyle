@@ -51,6 +51,7 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
   const loginUser = async (
     credentials: Credentials,
+    rememberMe: boolean,
   ): Promise<void | Response> => {
     try {
       const options = {
@@ -70,8 +71,10 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
       }
 
       const authenticatedUser: AuthenticatedUser = await response.json();
+      if (rememberMe) {
+        storeAuthenticatedUser(authenticatedUser);
+      }
       setAuthenticatedUser(authenticatedUser);
-      storeAuthenticatedUser(authenticatedUser);
       console.log('authenticatedUser: ', authenticatedUser);
     } catch (err) {
       console.error('loginUser::error: ', err);

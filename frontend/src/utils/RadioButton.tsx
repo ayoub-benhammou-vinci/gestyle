@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 interface RowRadioButtonsGroupProps {
+  name: string;
   option1: string;
   option2: string;
   option3: string;
@@ -14,6 +15,7 @@ interface RowRadioButtonsGroupProps {
 }
 
 export default function RowRadioButtonsGroup({
+  name,
   option1,
   option2,
   option3,
@@ -22,7 +24,12 @@ export default function RowRadioButtonsGroup({
 }: RowRadioButtonsGroupProps) {
   return (
     <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+      <FormLabel
+        id="demo-row-radio-buttons-group-label"
+        sx={{ color: '#9c684e' }}
+      >
+        {name}
+      </FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"

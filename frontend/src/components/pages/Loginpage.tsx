@@ -7,6 +7,9 @@ import {
   Typography,
   Link,
   Alert,
+  FormControlLabel,
+  Checkbox,
+  FormGroup,
 } from '@mui/material';
 import type { UserContextType } from '../types';
 import { useContext, useEffect, useState, type SyntheticEvent } from 'react';
@@ -20,10 +23,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { loginUser, authenticatedUser } =
     useContext<UserContextType>(UserContext);
+  const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
     if (authenticatedUser) {
-      navigate('/'); // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
+      navigate('/');
     }
     setEmail('');
     setPassword('');
@@ -33,15 +37,12 @@ const LoginPage = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      const response = await loginUser({ email, password });
+      const response = await loginUser({ email, password }, rememberMe);
       console.log(JSON.stringify(response));
-      if (response && response.status === 401) {
-        setError('Erreur de connexion. Email ou mot de passe invalide.');
-      } else {
-        navigate('/'); // Redirection vers la page Todo après connexion réussie
-      }
+      navigate('/');
     } catch (err) {
       console.error('LoginPage::error: ', err);
+      setError('Email ou mot de passe invalide.');
     }
   };
 
@@ -51,9 +52,22 @@ const LoginPage = () => {
       <Typography
         variant="h4"
         fontWeight="bold"
-        sx={{ color: '#9c684e', mb: 4 }}
+        sx={{ color: '#9c684e', mb: 2 }}
       >
         Se connecter
+      </Typography>
+
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        sx={{
+          color: '#9c684e',
+          mb: 4,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        {error && <Alert severity="error">{error}</Alert>}
       </Typography>
 
       {/* Conteneur principal */}
@@ -85,14 +99,13 @@ const LoginPage = () => {
 
           {/* Formulaire */}
           <Grid item xs={12} md={6}>
-            {error && <Alert severity="error">{error}</Alert>}
             <Box
               component="form"
               sx={{ textAlign: 'left' }}
               onSubmit={handleSubmit}
             >
               <Typography sx={{ color: '#9c684e', mb: 1 }}>
-                Adresse e-mail ou pseudo
+                Adresse e-mail
               </Typography>
               <TextField
                 fullWidth
@@ -100,6 +113,8 @@ const LoginPage = () => {
                 sx={{ mb: 2, backgroundColor: '#fff' }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                type="email"
               />
 
               <Typography sx={{ color: '#9c684e', mb: 1 }}>
@@ -109,10 +124,27 @@ const LoginPage = () => {
                 fullWidth
                 type="password"
                 variant="outlined"
-                sx={{ mb: 3, backgroundColor: '#fff' }}
+                sx={{ mb: 2, backgroundColor: '#fff' }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  label="Se souvenir de moi"
+                  sx={{
+                    color: '#9c684e',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    mb: 2,
+                  }}
+                  checked={rememberMe}
+                  onChange={(e) =>
+                    setRememberMe((e.target as HTMLInputElement).checked)
+                  }
+                />
+              </FormGroup>
               <Button
                 fullWidth
                 variant="contained"

@@ -32,6 +32,7 @@ interface UserContextType {
   authenticatedUser?: AuthenticatedUser;
   registerUser: (user: NewUser) => Promise<boolean>;
   loginUser: (credentials: Credentials) => Promise<void | Response>;
+  logout: () => void;
 }
 
 type MaybeAuthenticatedUser = AuthenticatedUser | undefined;

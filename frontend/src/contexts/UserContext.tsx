@@ -6,7 +6,11 @@ import type {
   NewUser,
   Credentials,
 } from '../components/types';
-import { storeAuthenticatedUser } from '../utils/session';
+import {
+  storeAuthenticatedUser,
+  getAuthenticatedUser,
+  clearAuthenticatedUser,
+} from '../utils/session';
 
 const defaultUserContext = {
   authenticatedUser: undefined,
@@ -14,13 +18,14 @@ const defaultUserContext = {
     return false;
   },
   loginUser: async () => {},
+  logout: () => {},
 };
 
 const UserContext = createContext<UserContextType>(defaultUserContext);
 
 const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [authenticatedUser, setAuthenticatedUser] =
-    useState<MaybeAuthenticatedUser>(undefined);
+    useState<MaybeAuthenticatedUser>(getAuthenticatedUser());
 
   const registerUser = async (newUser: NewUser): Promise<boolean> => {
     try {
@@ -74,10 +79,16 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    setAuthenticatedUser(undefined);
+    clearAuthenticatedUser();
+  };
+
   const myContext: UserContextType = {
     authenticatedUser,
     registerUser,
     loginUser,
+    logout,
   };
 
   return (

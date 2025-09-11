@@ -7,6 +7,9 @@ import {
   Typography,
   Link,
   Alert,
+  FormControlLabel,
+  Checkbox,
+  FormGroup,
 } from '@mui/material';
 import type { UserContextType } from '../types';
 import { useContext, useEffect, useState, type SyntheticEvent } from 'react';
@@ -109,10 +112,23 @@ const LoginPage = () => {
                 fullWidth
                 type="password"
                 variant="outlined"
-                sx={{ mb: 3, backgroundColor: '#fff' }}
+                sx={{ mb: 2, backgroundColor: '#fff' }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  label="Se souvenir de moi"
+                  sx={{
+                    color: '#9c684e',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    mb: 2,
+                  }}
+                />
+              </FormGroup>
               <Button
                 fullWidth
                 variant="contained"

@@ -48,21 +48,6 @@ const Homepage = () => {
               Organisez vos tâches perso ou en équipe, <br />
               et restez motivé ensemble jour après jour.
             </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: '#a87052',
-                color: '#fff',
-                borderRadius: '12px',
-                paddingX: 4,
-                '&:hover': {
-                  backgroundColor: '#915e45',
-                },
-              }}
-              onClick={() => navigate('/todo')}
-            >
-              Cliquez ici
-            </Button>
           </Paper>
         </Grid>
 
@@ -84,24 +69,26 @@ const Homepage = () => {
               Boostez votre concentration grâce à la méthode Pomodoro. <br />
               Seul ou accompagné, restez focus sans vous épuiser.
             </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: '#a87052',
-                color: '#fff',
-                borderRadius: '12px',
-                paddingX: 4,
-                '&:hover': {
-                  backgroundColor: '#915e45',
-                },
-              }}
-              onClick={() => navigate('/focus')}
-            >
-              Cliquez ici
-            </Button>
           </Paper>
         </Grid>
       </Grid>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: '#a87052',
+          color: '#fff',
+          borderRadius: '12px',
+          paddingX: 8,
+          py: 1.5,
+          '&:hover': {
+            backgroundColor: '#915e45',
+          },
+          marginTop: 8,
+        }}
+        onClick={() => navigate('/focus')}
+      >
+        Cliquez ici
+      </Button>
     </Box>
   );
 };

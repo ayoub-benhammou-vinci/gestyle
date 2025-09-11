@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import RowRadioButtonsGroup from '../../utils/RadioButton';
 
 const RegisterPage = () => {
   return (
@@ -25,12 +26,13 @@ const RegisterPage = () => {
           {/* Colonne gauche */}
           <Grid item xs={12} md={6}>
             <Box textAlign="left">
-              <Typography sx={{ color: '#9c684e', mb: 1 }}>Sexe</Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                sx={{ mb: 1, backgroundColor: '#fff' }}
-              />
+              <Box sx={{ color: '#9c684e', mb: 3.8 }}>
+                <RowRadioButtonsGroup
+                  option1="Féminin"
+                  option2="Masculin"
+                  option3="Autre"
+                />
+              </Box>
 
               <Typography sx={{ color: '#9c684e', mb: 1 }}>Pseudo</Typography>
               <TextField

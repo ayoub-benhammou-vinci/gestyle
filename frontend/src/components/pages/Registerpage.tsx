@@ -34,6 +34,11 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const civilityMap = new Map<string, string>([
+    ['Féminin', 'MADAM'],
+    ['Masculin', 'MISTER'],
+    ['Autre', 'OTHER'],
+  ]);
 
   useEffect(() => {
     setSexe('');
@@ -55,17 +60,12 @@ const RegisterPage = () => {
     }
 
     // If sexe is not selected, set an error message and return
-    let civility = '';
+    let civility: string = '';
 
-    if (sexe == 'Féminin') {
-      civility = 'MADAM';
-    } else if (sexe == 'Masculin') {
-      civility = 'MISTER';
-    } else if (sexe == 'Autre') {
-      civility = 'OTHER';
+    if (civilityMap.get(sexe) !== undefined) {
+      civility = civilityMap.get(sexe)!;
     } else {
       setError('Veuillez sélectionner une option pour le sexe.');
-      civility = '';
       return;
     }
 

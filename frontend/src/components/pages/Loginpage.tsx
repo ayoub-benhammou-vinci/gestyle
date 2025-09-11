@@ -23,6 +23,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { loginUser, authenticatedUser } =
     useContext<UserContextType>(UserContext);
+  const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
     if (authenticatedUser) {
@@ -35,8 +36,9 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    console.log('rememberMe: ', { rememberMe });
     try {
-      const response = await loginUser({ email, password });
+      const response = await loginUser({ email, password }, rememberMe);
       console.log(JSON.stringify(response));
       if (response && response.status === 401) {
         setError('Erreur de connexion. Email ou mot de passe invalide.');
@@ -127,6 +129,10 @@ const LoginPage = () => {
                     justifyContent: 'center',
                     mb: 2,
                   }}
+                  checked={rememberMe}
+                  onChange={(e) =>
+                    setRememberMe((e.target as HTMLInputElement).checked)
+                  }
                 />
               </FormGroup>
               <Button

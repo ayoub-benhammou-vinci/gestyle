@@ -2,8 +2,10 @@ import { Box, Typography, Button, Grid, Paper } from '@mui/material';
 import image1 from '../../assets/images/pomodoro_1.png';
 import image2 from '../../assets/images/focus_2.png';
 import image3 from '../../assets/images/coffee_3.png';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const FocusPage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -155,10 +157,13 @@ const FocusPage = () => {
                 backgroundColor: '#915e45',
               },
             }}
+            onClick={() => navigate('/focus-configuration')}
           >
             Commencer dès maintenant
           </Button>
         </Box>
+        {/* 🔹 Ici s’affichera ta sous-page */}
+        <Outlet />
       </Box>
     </>
   );

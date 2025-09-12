@@ -9,6 +9,7 @@ import RegisterPage from './components/pages/Registerpage';
 import Todopage from './components/pages/Todopage';
 import Focuspage from './components/pages/Focuspage';
 import { UserContextProvider } from './contexts/UserContext';
+import FocusConfigurationPage from './components/Focus/FocusConfigurationPage';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'focus',
         element: <Focuspage />,
+      },
+      {
+        path: 'focus-configuration',
+        element: <FocusConfigurationPage />,
       },
     ],
   },

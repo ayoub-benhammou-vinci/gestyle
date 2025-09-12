@@ -5,6 +5,7 @@ import be.vinci.ipl.cae.demo.models.entities.Task;
 import be.vinci.ipl.cae.demo.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,8 +23,8 @@ public class TaskController {
     return t != null && t.getTitle() != null && !t.getTitle().isBlank()
         && t.getContent() != null && !t.getContent().isBlank();
   }
-  @PostMapping("/")
-  public Task createTask(NewTask t) {
+  @PostMapping({"", "/"})
+  public Task createTask(@RequestBody NewTask t) {
     if (!isValidTask(t)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task");
     }

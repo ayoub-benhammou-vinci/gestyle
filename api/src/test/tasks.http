@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+
+### 1.1 Successful creation task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Faire les courses",
+  "content": "Acheter du lait, du pain et des œufs"
+}
+
+### 1.2 Missing title (400 Bad Request)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "content": "Acheter du lait, du pain et des œufs"
+}
+
+### 1.3 Missing content (400 Bad Request)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Faire les courses"
+}
+
+### 1.4 Empty body (400 Bad Request)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{}

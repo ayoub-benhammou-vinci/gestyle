@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 public class NewTask {
   private String title;
   private String content;
-  private String email;
 }

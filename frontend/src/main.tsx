@@ -8,6 +8,7 @@ import Homepage from './components/pages/Homepage';
 import RegisterPage from './components/pages/Registerpage';
 import { UserContextProvider } from './contexts/UserContext';
 import FocusConfigurationPage from './components/Focus/FocusConfigurationPage';
+import { TaskContextProvider } from './contexts/TaskContext';
 
 const router = createBrowserRouter([
   {
@@ -37,8 +38,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserContextProvider>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <TaskContextProvider>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </TaskContextProvider>
     </UserContextProvider>
   </React.StrictMode>,
 );

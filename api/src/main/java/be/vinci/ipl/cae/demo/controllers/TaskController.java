@@ -2,8 +2,10 @@ package be.vinci.ipl.cae.demo.controllers;
 
 import be.vinci.ipl.cae.demo.models.dtos.NewTask;
 import be.vinci.ipl.cae.demo.models.entities.Task;
+import be.vinci.ipl.cae.demo.models.entities.User;
 import be.vinci.ipl.cae.demo.services.TaskService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
+
   private final TaskService taskService;
 
   public TaskController(TaskService taskService) {
@@ -26,19 +29,21 @@ public class TaskController {
   }
 
   @PostMapping({"", "/"})
-  public Task createTask(@RequestBody NewTask t) {
-    if (!isValidTask(t)) {
+  public Task createTask(@RequestBody NewTask t, @AuthenticationPrincipal User authenticatedUser) {
+    if (!isValidTask(t) || authenticatedUser == null || authenticatedUser.getEmail() == null
+        || authenticatedUser.getEmail().isBlank()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task");
     }
-    return taskService.createTask(t);
+    return taskService.createTask(t, authenticatedUser.getEmail());
   }
 
-  @GetMapping("/")
-  public Task[] getAllTasks(String email) {
-    if (email == null || email.isBlank()) {
+  @GetMapping({"", "/"})
+  public Task[] getAllTasks(@AuthenticationPrincipal User authenticatedUser) {
+    if (authenticatedUser == null || authenticatedUser.getEmail() == null
+        || authenticatedUser.getEmail().isBlank()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
     }
-    return taskService.getAllTasks(email);
+    return taskService.getAllTasks(authenticatedUser.getEmail());
   }
 
 }

@@ -1,13 +1,23 @@
 @baseUrl = http://localhost:3000
 
-### 1.1 Successful creation task
-POST {{baseUrl}}/tasks
+### 0.0 Login successful
+POST {{baseUrl}}/auths/login
 Content-Type: application/json
 
 {
+  "email": "user1@gmail.com",
+  "password": "password123"
+}
+> {% client.global.set("userToken", response.body.token) %}
+
+### 1.1 Successful creation task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+Authorization: {{userToken}}
+
+{
   "title": "Faire les courses",
-  "content": "Acheter du lait, du pain et des œufs",
-  "email": "user1@gmail.com"
+  "content": "Acheter du lait, du pain et des œufs"
 }
 
 ### 1.2 Missing title (400 Bad Request)
@@ -31,3 +41,8 @@ POST {{baseUrl}}/tasks
 Content-Type: application/json
 
 {}
+
+### 1.5 Get all tasks (should return 200 OK)
+GET {{baseUrl}}/tasks/
+Content-Type: application/json
+Authorization: {{userToken}}

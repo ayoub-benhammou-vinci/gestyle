@@ -18,8 +18,8 @@ public class TaskService {
     this.userService = userService;
   }
 
-  public Task createTask(NewTask t) {
-    User userConnected = userService.readOneFromEmail(t.getEmail());
+  public Task createTask(NewTask t, String email) {
+    User userConnected = userService.readOneFromEmail(email);
     if (userConnected == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
@@ -36,6 +36,6 @@ public class TaskService {
     if (userConnected == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
-    return taskRepository.findAllByUserEmail(email);
+    return taskRepository.findAllByUser(userConnected);
   }
 }

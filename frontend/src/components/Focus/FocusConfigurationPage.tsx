@@ -1,34 +1,13 @@
 import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
 import { useEffect, useState, type SyntheticEvent } from 'react';
-import type { NewTask } from '../types';
 import { UserContext } from '../../contexts/UserContext';
 import type { UserContextType } from '../types';
 import { useContext } from 'react';
-
-const createTask = async (newTask: NewTask): Promise<NewTask | undefined> => {
-  try {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(newTask),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const response = await fetch('/api/tasks', options);
-    if (!response.ok) {
-      throw new Error('Failed to create task');
-    }
-
-    const t = await response.json();
-    return t;
-  } catch (error) {
-    console.error('Error creating task:', error);
-    return undefined;
-  }
-};
+import { TaskContext } from '../../contexts/TaskContext';
+import type { TaskContextType } from '../types';
 
 const FocusConfigurationPage = () => {
+  const { createTask } = useContext<TaskContextType>(TaskContext);
   const { authenticatedUser } = useContext<UserContextType>(UserContext);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -44,7 +23,6 @@ const FocusConfigurationPage = () => {
         const response = await createTask({
           title,
           content,
-          email: authenticatedUser.email,
         });
         console.log(JSON.stringify(response));
         handleClose();

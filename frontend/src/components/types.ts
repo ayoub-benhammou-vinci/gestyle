@@ -16,7 +16,6 @@ interface Task {
 interface NewTask {
   title: string;
   content: string;
-  email: string;
 }
 
 interface Credentials {
@@ -41,6 +40,10 @@ interface UserContextType {
   logout: () => void;
 }
 
+interface TaskContextType {
+  createTask: (newTask: NewTask) => Promise<NewTask | undefined>;
+}
+
 type MaybeAuthenticatedUser = AuthenticatedUser | undefined;
 
 export type {
@@ -52,4 +55,5 @@ export type {
   UserContextType,
   MaybeAuthenticatedUser,
   NewTask,
+  TaskContextType,
 };

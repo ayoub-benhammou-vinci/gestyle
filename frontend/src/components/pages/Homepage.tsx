@@ -148,10 +148,10 @@ const Homepage = () => {
                   component="img"
                   src={image3}
                   alt="Configurez votre temps de travail"
-                  sx={{ width: 100, height: 'auto', mb: 2 }}
+                  sx={{ width: 100, height: 'auto', mb: 3.3 }}
                 />
                 <Typography sx={{ color: '#9c684e', fontWeight: 'bold' }}>
-                  Gardez l’équilibre entre focus et pause
+                  Gardez l’équilibre
                 </Typography>
               </Paper>
             </Grid>

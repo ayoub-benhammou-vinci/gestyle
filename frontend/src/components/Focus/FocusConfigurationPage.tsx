@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
 import { useEffect, useState, type SyntheticEvent } from 'react';
 import type { NewTask } from '../types';
+import { UserContext } from '../../contexts/UserContext';
+import type { UserContextType } from '../types';
+import { useContext } from 'react';
 
 const createTask = async (newTask: NewTask): Promise<NewTask | undefined> => {
   try {
@@ -26,6 +29,7 @@ const createTask = async (newTask: NewTask): Promise<NewTask | undefined> => {
 };
 
 const FocusConfigurationPage = () => {
+  const { authenticatedUser } = useContext<UserContextType>(UserContext);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -36,9 +40,15 @@ const FocusConfigurationPage = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      const response = await createTask({ title, content });
-      console.log(JSON.stringify(response));
-      handleClose();
+      if (authenticatedUser) {
+        const response = await createTask({
+          title,
+          content,
+          email: authenticatedUser.email,
+        });
+        console.log(JSON.stringify(response));
+        handleClose();
+      }
     } catch (err) {
       console.error('FocusConfigurationPage::error: ', err);
     }

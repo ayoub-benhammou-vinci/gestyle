@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
-
+  public Task[] findAllByUserEmail(String email);
 }

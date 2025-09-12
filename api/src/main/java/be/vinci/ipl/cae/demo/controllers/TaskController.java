@@ -4,6 +4,7 @@ import be.vinci.ipl.cae.demo.models.dtos.NewTask;
 import be.vinci.ipl.cae.demo.models.entities.Task;
 import be.vinci.ipl.cae.demo.services.TaskService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class TaskController {
     return t != null && t.getTitle() != null && !t.getTitle().isBlank()
         && t.getContent() != null && !t.getContent().isBlank();
   }
+
   @PostMapping({"", "/"})
   public Task createTask(@RequestBody NewTask t) {
     if (!isValidTask(t)) {
@@ -30,4 +32,13 @@ public class TaskController {
     }
     return taskService.createTask(t);
   }
+
+  @GetMapping("/")
+  public Task[] getAllTasks(String email) {
+    if (email == null || email.isBlank()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
+    }
+    return taskService.getAllTasks(email);
+  }
+
 }

@@ -6,7 +6,8 @@ Content-Type: application/json
 
 {
   "title": "Faire les courses",
-  "content": "Acheter du lait, du pain et des œufs"
+  "content": "Acheter du lait, du pain et des œufs",
+  "email": "user1@gmail.com"
 }
 
 ### 1.2 Missing title (400 Bad Request)

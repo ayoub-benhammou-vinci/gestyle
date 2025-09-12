@@ -165,7 +165,11 @@ const LoginPage = () => {
                 sx={{ color: '#a87052', textAlign: 'center' }}
               >
                 Pas encore de compte,{' '}
-                <Link href="#" underline="hover" color="#a87052">
+                <Link
+                  onClick={() => navigate('/register')}
+                  underline="hover"
+                  color="#a87052"
+                >
                   créer en un
                 </Link>
                 <br />

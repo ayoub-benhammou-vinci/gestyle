@@ -47,13 +47,9 @@ const LoginPage = () => {
   };
 
   return (
-    <Box sx={{ flex: 1, py: 6, textAlign: 'center' }}>
+    <Box sx={{ flex: 1, py: 3, textAlign: 'center' }}>
       {/* Titre */}
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        sx={{ color: '#9c684e', mb: 2 }}
-      >
+      <Typography variant="h4" fontWeight="bold" sx={{ color: '#9c684e' }}>
         Se connecter
       </Typography>
 

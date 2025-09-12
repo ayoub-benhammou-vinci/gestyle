@@ -10,7 +10,7 @@ const Homepage = () => {
     <>
       <Box
         component="main"
-        sx={{ px: 8, textAlign: 'center', backgroundColor: '#fffdfb', py: 5 }}
+        sx={{ px: 8, textAlign: 'center', backgroundColor: '#fffdfb', py: 3 }}
       >
         <Typography
           variant="h4"
@@ -21,7 +21,7 @@ const Homepage = () => {
           Focus avec la méthode Pomodoro
         </Typography>
 
-        <Typography variant="h6" sx={{ mb: 5, color: '#9c684e' }}>
+        <Typography variant="h6" sx={{ mb: 2, color: '#9c684e' }}>
           Concentrez-vous pleinement, sans vous épuiser. <br />
           Alternez travail et repos pour garder l’équilibre.
         </Typography>
@@ -30,9 +30,9 @@ const Homepage = () => {
         <Box
           sx={{
             backgroundColor: '#f9f2eb',
-            padding: 4,
+            padding: 3,
             borderRadius: 4,
-            mx: { xs: 2, md: 10 },
+            mx: { xs: 2, md: 8 },
           }}
         >
           <Grid container spacing={4} justifyContent="center" sx={{ mb: 5 }}>
@@ -50,6 +50,11 @@ const Homepage = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  transition: 'transform 0.3s, box-shadow 0.3s', // ⬅️ animation fluide
+                  '&:hover': {
+                    transform: 'scale(1.05)', // agrandit légèrement
+                    boxShadow: 6, // ajoute une ombre
+                  },
                 }}
               >
                 <Typography
@@ -85,6 +90,11 @@ const Homepage = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  transition: 'transform 0.3s, box-shadow 0.3s', // ⬅️ animation fluide
+                  '&:hover': {
+                    transform: 'scale(1.05)', // agrandit légèrement
+                    boxShadow: 6, // ajoute une ombre
+                  },
                 }}
               >
                 <Typography
@@ -120,6 +130,11 @@ const Homepage = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  transition: 'transform 0.3s, box-shadow 0.3s', // ⬅️ animation fluide
+                  '&:hover': {
+                    transform: 'scale(1.05)', // agrandit légèrement
+                    boxShadow: 6, // ajoute une ombre
+                  },
                 }}
               >
                 <Typography

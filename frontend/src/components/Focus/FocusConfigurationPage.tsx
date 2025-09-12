@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
-import { useState, type SyntheticEvent } from 'react';
+import { useEffect, useState, type SyntheticEvent } from 'react';
 import type { NewTask } from '../types';
 
 const createTask = async (newTask: NewTask): Promise<NewTask | undefined> => {
@@ -43,6 +43,11 @@ const FocusConfigurationPage = () => {
       console.error('FocusConfigurationPage::error: ', err);
     }
   };
+
+  useEffect(() => {
+    setTitle('');
+    setContent('');
+  }, []);
 
   return (
     <>
@@ -188,7 +193,7 @@ const FocusConfigurationPage = () => {
                       }}
                       onClick={handleSubmit}
                     >
-                      Ajouter une tâche
+                      Ajouter
                     </Button>
                   </Grid>
                 </Grid>

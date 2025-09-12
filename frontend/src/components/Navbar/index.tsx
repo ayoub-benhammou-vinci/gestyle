@@ -4,7 +4,6 @@ import {
   Toolbar,
   Box,
   IconButton,
-  Button,
   Typography,
   Avatar,
   Menu,
@@ -56,13 +55,6 @@ const Navbar = () => {
 
         {/* Right side - Nav buttons + profile */}
         <Box display="flex" alignItems="center" gap={4}>
-          <Button onClick={() => navigate('/todo')} sx={navButtonStyle}>
-            To-do
-          </Button>
-          <Button onClick={() => navigate('/focus')} sx={navButtonStyle}>
-            Focus
-          </Button>
-
           {authenticatedUser && (
             <>
               <IconButton onClick={handleMenuOpen}>

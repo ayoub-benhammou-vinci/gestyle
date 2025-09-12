@@ -10,7 +10,7 @@ import {
   storeAuthenticatedUser,
   getAuthenticatedUser,
   clearAuthenticatedUser,
-} from '../utils/session';
+} from '../utils/session.tsx';
 
 const defaultUserContext = {
   authenticatedUser: undefined,

@@ -1,11 +1,49 @@
 import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useState, type SyntheticEvent } from 'react';
+import type { NewTask } from '../types';
+
+const createTask = async (newTask: NewTask): Promise<NewTask | undefined> => {
+  try {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(newTask),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const response = await fetch('/api/tasks', options);
+    if (!response.ok) {
+      throw new Error('Failed to create task');
+    }
+
+    const t = await response.json();
+    return t;
+  } catch (error) {
+    console.error('Error creating task:', error);
+    return undefined;
+  }
+};
 
 const FocusConfigurationPage = () => {
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const response = await createTask({ title, content });
+      console.log(JSON.stringify(response));
+      handleClose();
+    } catch (err) {
+      console.error('FocusConfigurationPage::error: ', err);
+    }
+  };
+
   return (
     <>
       <Box
@@ -118,6 +156,8 @@ const FocusConfigurationPage = () => {
                       fullWidth
                       variant="outlined"
                       sx={{ mb: 2, backgroundColor: '#fff' }}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                     />
                   </Grid>
 
@@ -129,6 +169,8 @@ const FocusConfigurationPage = () => {
                       fullWidth
                       variant="outlined"
                       sx={{ mb: 2, backgroundColor: '#fff' }}
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
                     />
                   </Grid>
 
@@ -144,6 +186,7 @@ const FocusConfigurationPage = () => {
                         mt: 4,
                         textAlign: 'center',
                       }}
+                      onClick={handleSubmit}
                     >
                       Ajouter une tâche
                     </Button>

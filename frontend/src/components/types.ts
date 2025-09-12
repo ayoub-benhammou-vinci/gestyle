@@ -7,6 +7,7 @@ interface User {
 }
 
 interface Task {
+  id: number;
   title: string;
   content: string;
 }
@@ -40,6 +41,8 @@ interface UserContextType {
 
 type MaybeAuthenticatedUser = AuthenticatedUser | undefined;
 
+type NewTask = Omit<Task, 'id'>;
+
 export type {
   Task,
   User,
@@ -48,4 +51,5 @@ export type {
   NewUser,
   UserContextType,
   MaybeAuthenticatedUser,
+  NewTask,
 };

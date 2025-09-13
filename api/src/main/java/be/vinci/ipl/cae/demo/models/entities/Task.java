@@ -12,6 +12,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Task entity.
+ */
 @Entity
 @Table(name = "tasks")
 @Data

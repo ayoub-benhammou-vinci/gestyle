@@ -11,29 +11,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * AuthController to handle user authentication.
+ */
 @RestController
 @RequestMapping("/auths")
 public class AuthController {
 
+  /**
+   * The injected UserService.
+   */
   private final UserService userService;
 
+  /**
+   * Constructor for AuthController.
+   *
+   * @param userService the injected UserService.
+   */
   public AuthController(UserService userService) {
     this.userService = userService;
   }
 
   private boolean isValidRegisterCredentials(NewUser credentials) {
-    return credentials != null && credentials.getEmail() != null && !credentials.getEmail().isBlank()
+    return credentials != null && credentials.getEmail() != null
+        && !credentials.getEmail().isBlank()
         && credentials.getPassword() != null && !credentials.getPassword().isBlank()
         && credentials.getPseudo() != null && !credentials.getPseudo().isBlank()
         && credentials.getCivility() != null && !credentials.getCivility().toString().isBlank();
   }
 
   private boolean isValidLoginCredentials(Credentials credentials) {
-    return credentials != null &&
-        credentials.getEmail() != null && !credentials.getEmail().isBlank()
+    return credentials != null
+        && credentials.getEmail() != null && !credentials.getEmail().isBlank()
         && credentials.getPassword() != null && !credentials.getPassword().isBlank();
   }
 
+  /**
+   * Register a new user.
+   *
+   * @param credentials the credentials of the new user.
+   */
   @PostMapping("/register")
   public void register(@RequestBody NewUser credentials) {
     if (!isValidRegisterCredentials(credentials)) {
@@ -42,6 +59,12 @@ public class AuthController {
     userService.register(credentials);
   }
 
+  /**
+   * Login a user.
+   *
+   * @param credentials the credentials of the user.
+   * @return the authenticated user.
+   */
   @PostMapping("/login")
   public AuthenticatedUser login(@RequestBody Credentials credentials) {
     if (!isValidLoginCredentials(credentials)) {

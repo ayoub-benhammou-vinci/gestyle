@@ -4,6 +4,9 @@ import be.vinci.ipl.cae.demo.models.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * NewTask DTO.
+ */
 @Data
 @NoArgsConstructor
 public class NewTask {

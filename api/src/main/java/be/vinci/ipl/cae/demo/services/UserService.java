@@ -105,7 +105,6 @@ public class UserService {
    * Register a new user.
    *
    * @param user the user to register
-   * @return the authenticated user if the registration is successful, null otherwise
    */
   public void register(NewUser user) {
     if (userRepository.findByEmail(user.getEmail()) != null) {

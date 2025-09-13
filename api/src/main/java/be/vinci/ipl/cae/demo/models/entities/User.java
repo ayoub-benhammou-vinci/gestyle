@@ -37,6 +37,9 @@ public class User {
   @Column(nullable = false)
   private String password;
 
+  /**
+   * Role of the user.
+   */
   public enum Civility {
     MISTER, MADAM, OTHER;
   }

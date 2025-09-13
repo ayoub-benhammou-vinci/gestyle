@@ -4,7 +4,6 @@ import {
   Toolbar,
   Box,
   IconButton,
-  Button,
   Typography,
   Avatar,
   Menu,
@@ -56,13 +55,6 @@ const Navbar = () => {
 
         {/* Right side - Nav buttons + profile */}
         <Box display="flex" alignItems="center" gap={4}>
-          <Button onClick={() => navigate('/todo')} sx={navButtonStyle}>
-            To-do
-          </Button>
-          <Button onClick={() => navigate('/focus')} sx={navButtonStyle}>
-            Focus
-          </Button>
-
           {authenticatedUser && (
             <>
               <IconButton onClick={handleMenuOpen}>
@@ -71,6 +63,7 @@ const Navbar = () => {
                     width: 32,
                     height: 32,
                     bgcolor: '#e2d6cc',
+                    backgroundColor: '#a06b4f',
                   }}
                 />
               </IconButton>
@@ -79,8 +72,12 @@ const Navbar = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
               >
-                <MenuItem onClick={goToProfile}>Voir profil</MenuItem>
-                <MenuItem onClick={logoutAndRedirect}>Se déconnecter</MenuItem>
+                <MenuItem onClick={goToProfile} sx={{ color: '#a06b4f' }}>
+                  Voir profil
+                </MenuItem>
+                <MenuItem onClick={logoutAndRedirect} sx={{ color: '#a06b4f' }}>
+                  Se déconnecter
+                </MenuItem>
               </Menu>
             </>
           )}

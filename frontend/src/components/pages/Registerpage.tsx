@@ -82,14 +82,10 @@ const RegisterPage = () => {
   return (
     <Box
       component="form"
-      sx={{ flex: 1, py: 5, textAlign: 'center' }}
+      sx={{ flex: 1, py: 3, textAlign: 'center' }}
       onSubmit={handleSubmit}
     >
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        sx={{ color: '#9c684e', mb: 4 }}
-      >
+      <Typography variant="h4" fontWeight="bold" sx={{ color: '#9c684e' }}>
         Inscription
       </Typography>
 

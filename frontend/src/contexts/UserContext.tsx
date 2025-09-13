@@ -10,7 +10,8 @@ import {
   storeAuthenticatedUser,
   getAuthenticatedUser,
   clearAuthenticatedUser,
-} from '../utils/session';
+  storeSessionAuthenticatedUser,
+} from '../utils/session.tsx';
 
 const defaultUserContext = {
   authenticatedUser: undefined,
@@ -73,6 +74,8 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
       const authenticatedUser: AuthenticatedUser = await response.json();
       if (rememberMe) {
         storeAuthenticatedUser(authenticatedUser);
+      } else {
+        storeSessionAuthenticatedUser(authenticatedUser);
       }
       setAuthenticatedUser(authenticatedUser);
       console.log('authenticatedUser: ', authenticatedUser);

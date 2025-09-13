@@ -1,12 +1,19 @@
 interface User {
   id: number;
-  sexe: string;
+  civility: string;
   pseudo: string;
   email: string;
   password: string;
 }
 
 interface Task {
+  id: number;
+  title: string;
+  content: string;
+  user: User;
+}
+
+interface NewTask {
   title: string;
   content: string;
 }
@@ -21,12 +28,7 @@ interface AuthenticatedUser {
   token: string;
 }
 
-interface NewUser {
-  civility: string;
-  pseudo: string;
-  email: string;
-  password: string;
-}
+type NewUser = Omit<User, 'id'>;
 
 interface UserContextType {
   authenticatedUser?: AuthenticatedUser;
@@ -36,6 +38,11 @@ interface UserContextType {
     rememberMe: boolean,
   ) => Promise<void | Response>;
   logout: () => void;
+}
+
+interface TaskContextType {
+  createTask: (newTask: NewTask) => Promise<NewTask | undefined>;
+  getTasks: () => Promise<Task[] | undefined>;
 }
 
 type MaybeAuthenticatedUser = AuthenticatedUser | undefined;
@@ -48,4 +55,6 @@ export type {
   NewUser,
   UserContextType,
   MaybeAuthenticatedUser,
+  NewTask,
+  TaskContextType,
 };

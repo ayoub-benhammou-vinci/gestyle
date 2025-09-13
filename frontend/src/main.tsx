@@ -6,9 +6,9 @@ import App from './components/Main/App';
 import LoginPage from './components/pages/Loginpage';
 import Homepage from './components/pages/Homepage';
 import RegisterPage from './components/pages/Registerpage';
-import Todopage from './components/pages/Todopage';
-import Focuspage from './components/pages/Focuspage';
 import { UserContextProvider } from './contexts/UserContext';
+import FocusConfigurationPage from './components/Focus/FocusConfigurationPage';
+import { TaskContextProvider } from './contexts/TaskContext';
 
 const router = createBrowserRouter([
   {
@@ -28,12 +28,8 @@ const router = createBrowserRouter([
         element: <RegisterPage />,
       },
       {
-        path: 'todo',
-        element: <Todopage />,
-      },
-      {
-        path: 'focus',
-        element: <Focuspage />,
+        path: 'focus-configuration',
+        element: <FocusConfigurationPage />,
       },
     ],
   },
@@ -42,8 +38,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserContextProvider>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <TaskContextProvider>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </TaskContextProvider>
     </UserContextProvider>
   </React.StrictMode>,
 );

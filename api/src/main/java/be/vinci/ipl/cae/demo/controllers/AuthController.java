@@ -32,20 +32,22 @@ public class AuthController {
     this.userService = userService;
   }
 
+  private boolean isValidEmailAndPassword(String email, String password) {
+    return email != null && !email.isBlank()
+        && password != null && !password.isBlank();
+  }
+
   private boolean isValidRegisterCredentials(NewUser credentials) {
-    return credentials != null && credentials.getEmail() != null
-        && !credentials.getEmail().isBlank()
-        && credentials.getPassword() != null && !credentials.getPassword().isBlank()
+    return credentials != null
+        && isValidEmailAndPassword(credentials.getEmail(), credentials.getPassword())
         && credentials.getPseudo() != null && !credentials.getPseudo().isBlank()
         && credentials.getCivility() != null && !credentials.getCivility().toString().isBlank();
   }
 
   private boolean isValidLoginCredentials(Credentials credentials) {
     return credentials != null
-        && credentials.getEmail() != null && !credentials.getEmail().isBlank()
-        && credentials.getPassword() != null && !credentials.getPassword().isBlank();
+        && isValidEmailAndPassword(credentials.getEmail(), credentials.getPassword());
   }
-
   /**
    * Register a new user.
    *

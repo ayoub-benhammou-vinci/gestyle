@@ -42,6 +42,7 @@ interface UserContextType {
 
 interface TaskContextType {
   createTask: (newTask: NewTask) => Promise<NewTask | undefined>;
+  getTasks: () => Promise<Task[] | undefined>;
 }
 
 type MaybeAuthenticatedUser = AuthenticatedUser | undefined;

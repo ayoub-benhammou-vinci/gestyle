@@ -1,14 +1,30 @@
-import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Grid,
+  Modal,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useEffect, useState, type SyntheticEvent } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import type { UserContextType } from '../types';
+import { type Task, type UserContextType } from '../types';
 import { useContext } from 'react';
 import { TaskContext } from '../../contexts/TaskContext';
 import type { TaskContextType } from '../types';
 
 const FocusConfigurationPage = () => {
-  const { createTask } = useContext<TaskContextType>(TaskContext);
+  const { createTask, getTasks } = useContext<TaskContextType>(TaskContext);
   const { authenticatedUser } = useContext<UserContextType>(UserContext);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -33,15 +49,25 @@ const FocusConfigurationPage = () => {
   };
 
   useEffect(() => {
-    setTitle('');
-    setContent('');
-  }, []);
+    const fetchTasks = async () => {
+      if (authenticatedUser) {
+        const tasks = await getTasks();
+        if (tasks) {
+          setTasks(tasks);
+        }
+      }
+      setTitle('');
+      setContent('');
+    };
+
+    fetchTasks();
+  }, [authenticatedUser, getTasks]);
 
   return (
     <>
       <Box
         component="main"
-        sx={{ padding: 6, textAlign: 'center', backgroundColor: '#fffdfb' }}
+        sx={{ padding: 4, textAlign: 'center', backgroundColor: '#fffdfb' }}
       >
         <Typography
           variant="h4"
@@ -60,9 +86,10 @@ const FocusConfigurationPage = () => {
           borderRadius: 4,
           mx: 10,
           px: 15,
+          mb: 5,
         }}
       >
-        <Grid container spacing={4} sx={{ pt: 2 }}>
+        <Grid container spacing={2} sx={{ pt: 2 }}>
           {/* Colonne gauche */}
           <Grid item xs={12} md={6}>
             <Typography sx={{ color: '#9c684e', mb: 1 }}>
@@ -73,7 +100,10 @@ const FocusConfigurationPage = () => {
               variant="outlined"
               sx={{ mb: 3, backgroundColor: '#fff' }}
             />
+          </Grid>
 
+          {/* Colonne droite */}
+          <Grid item xs={12} md={6}>
             <Typography sx={{ color: '#9c684e', mb: 1 }}>
               Temps de pause (minutes)
             </Typography>
@@ -84,111 +114,172 @@ const FocusConfigurationPage = () => {
               sx={{ mb: 2, backgroundColor: '#fff' }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: '#a87052',
-                color: '#fff',
-                paddingY: 1,
-                borderRadius: 3,
-                fontWeight: 'bold',
-                mt: 4,
-              }}
-              onClick={handleOpen}
-            >
-              Ajouter une tâche
-            </Button>
 
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="child-modal-title"
-              aria-describedby="child-modal-description"
-            >
+          {/* Tableau + bouton sur toute la largeur */}
+          {tasks.length > 0 ? (
+            <Grid item xs={12}>
+              <TableContainer component={Paper} sx={{ width: '100%' }}>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: '#a87052' }}>
+                      <TableCell sx={{ color: '#fff', fontWeight: 'bold' }} />
+                      <TableCell
+                        align="center"
+                        sx={{ color: '#fff', fontWeight: 'bold' }}
+                      >
+                        Titre
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ color: '#fff', fontWeight: 'bold' }}
+                      >
+                        Description
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {tasks.map((task) => (
+                      <TableRow key={task.id}>
+                        <TableCell>
+                          <Checkbox defaultChecked />
+                        </TableCell>
+                        <TableCell align="center">{task.title}</TableCell>
+                        <TableCell align="center">{task.content}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+
+              {/* Bouton centré */}
               <Box
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: 600,
-                  height: 400,
-                  bgcolor: 'background.paper',
-                  borderRadius: 2,
-                  boxShadow: 24,
-                  p: 4,
-                  backgroundColor: '#f9f2eb',
-                }}
+                sx={{ display: 'flex', justifyContent: 'space-around', mx: 20 }}
               >
-                <Typography
-                  variant="h4"
-                  component="h2"
+                <Button
+                  variant="contained"
                   sx={{
-                    color: '#9c684e',
-                    textAlign: 'center',
-                    mb: 3,
+                    backgroundColor: '#a87052',
+                    color: '#fff',
+                    paddingY: 1,
+                    borderRadius: 3,
                     fontWeight: 'bold',
+                    mt: 4,
                   }}
+                  onClick={handleOpen}
                 >
                   Ajouter une tâche
-                </Typography>
-                <Grid
-                  container
-                  direction="column"
+                </Button>
+
+                <Button
+                  variant="contained"
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
+                    backgroundColor: '#a87052',
+                    color: '#fff',
+                    paddingY: 1,
+                    borderRadius: 3,
+                    fontWeight: 'bold',
+                    mt: 4,
                   }}
+                  onClick={handleOpen}
                 >
-                  <Grid item xs={12} md={6}>
-                    <Typography sx={{ color: '#9c684e', mb: 1 }}>
-                      Titre
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      sx={{ mb: 2, backgroundColor: '#fff' }}
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <Typography sx={{ color: '#9c684e', mb: 1 }}>
-                      Description
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      sx={{ mb: 2, backgroundColor: '#fff' }}
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: '#a87052',
-                        color: '#fff',
-                        paddingY: 1,
-                        borderRadius: 3,
-                        fontWeight: 'bold',
-                        mt: 4,
-                        textAlign: 'center',
-                      }}
-                      onClick={handleSubmit}
-                    >
-                      Ajouter
-                    </Button>
-                  </Grid>
-                </Grid>
+                  Commencer
+                </Button>
               </Box>
-            </Modal>
-          </Grid>
+            </Grid>
+          ) : (
+            <Grid item xs={12}>
+              <Typography sx={{ textAlign: 'center', mt: 4 }}>
+                Aucune tâche à afficher
+              </Typography>
+            </Grid>
+          )}
         </Grid>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="child-modal-title"
+          aria-describedby="child-modal-description"
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 600,
+              height: 400,
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 24,
+              p: 4,
+              backgroundColor: '#f9f2eb',
+            }}
+          >
+            <Typography
+              variant="h4"
+              component="h2"
+              sx={{
+                color: '#9c684e',
+                textAlign: 'center',
+                mb: 3,
+                fontWeight: 'bold',
+              }}
+            >
+              Ajouter une tâche
+            </Typography>
+            <Grid
+              container
+              direction="column"
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Grid item xs={12} md={6}>
+                <Typography sx={{ color: '#9c684e', mb: 1 }}>Titre</Typography>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  sx={{ mb: 2, backgroundColor: '#fff' }}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Typography sx={{ color: '#9c684e', mb: 1 }}>
+                  Description
+                </Typography>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  sx={{ mb: 2, backgroundColor: '#fff' }}
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: '#a87052',
+                    color: '#fff',
+                    paddingY: 1,
+                    borderRadius: 3,
+                    fontWeight: 'bold',
+                    mt: 4,
+                    textAlign: 'center',
+                  }}
+                  onClick={handleSubmit}
+                >
+                  Ajouter
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Modal>
       </Box>
     </>
   );

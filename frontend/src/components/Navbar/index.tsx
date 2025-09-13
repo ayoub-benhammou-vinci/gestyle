@@ -63,6 +63,7 @@ const Navbar = () => {
                     width: 32,
                     height: 32,
                     bgcolor: '#e2d6cc',
+                    backgroundColor: '#a06b4f',
                   }}
                 />
               </IconButton>
@@ -71,8 +72,12 @@ const Navbar = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
               >
-                <MenuItem onClick={goToProfile}>Voir profil</MenuItem>
-                <MenuItem onClick={logoutAndRedirect}>Se déconnecter</MenuItem>
+                <MenuItem onClick={goToProfile} sx={{ color: '#a06b4f' }}>
+                  Voir profil
+                </MenuItem>
+                <MenuItem onClick={logoutAndRedirect} sx={{ color: '#a06b4f' }}>
+                  Se déconnecter
+                </MenuItem>
               </Menu>
             </>
           )}

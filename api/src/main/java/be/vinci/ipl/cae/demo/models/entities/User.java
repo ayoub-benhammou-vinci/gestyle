@@ -41,7 +41,7 @@ public class User {
    * Role of the user.
    */
   public enum Civility {
-    MISTER, MADAM, OTHER;
+    MISTER, MADAM, OTHER
   }
 
 }

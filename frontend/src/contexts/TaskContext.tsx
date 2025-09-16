@@ -16,6 +16,9 @@ const TaskContext = createContext<TaskContextType>(defaultTaskContext);
 
 const TaskContextProvider = ({ children }: { children: ReactNode }) => {
   const { authenticatedUser } = useContext<UserContextType>(UserContext);
+
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
   const createTask = async (newTask: NewTask): Promise<NewTask | undefined> => {
     try {
       if (authenticatedUser) {
@@ -28,7 +31,7 @@ const TaskContextProvider = ({ children }: { children: ReactNode }) => {
           },
         };
 
-        const response = await fetch('/api/tasks', options);
+        const response = await fetch(`${apiUrl}/tasks`, options);
         if (!response.ok) {
           throw new Error('Failed to create task');
         }
@@ -53,7 +56,7 @@ const TaskContextProvider = ({ children }: { children: ReactNode }) => {
           },
         };
 
-        const response = await fetch('/api/tasks', options);
+        const response = await fetch(`${apiUrl}/tasks`, options);
         if (!response.ok) {
           throw new Error('Failed to fetch tasks');
         }

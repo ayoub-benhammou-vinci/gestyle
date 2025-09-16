@@ -28,6 +28,8 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [authenticatedUser, setAuthenticatedUser] =
     useState<MaybeAuthenticatedUser>(getAuthenticatedUser());
 
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
   const registerUser = async (newUser: NewUser): Promise<boolean> => {
     try {
       const options = {
@@ -38,7 +40,7 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
         },
       };
 
-      const response = await fetch('/api/auths/register', options);
+      const response = await fetch(`${apiUrl}/auths/register`, options);
 
       if (!response.ok) {
         return false;
@@ -63,7 +65,7 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
         },
       };
 
-      const response = await fetch('/api/auths/login', options);
+      const response = await fetch(`${apiUrl}/auths/login`, options);
 
       if (!response.ok) {
         throw new Error(
